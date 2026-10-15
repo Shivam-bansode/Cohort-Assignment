@@ -1,0 +1,344 @@
+/* Day 4 CSS Assignment
+   Main concept: position: relative + position: absolute
+*/
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  --yellow: #ffca05;
+  --yellow-deep: #f4b900;
+  --cream: #fff0c6;
+  --ink: #080808;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  padding: 26px 30px;
+  display: grid;
+  place-items: center;
+  background: #f7f7f7;
+  color: var(--ink);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.pokemon-card {
+  width: min(1500px, 100%);
+  min-height: min(940px, calc(100vh - 52px));
+  position: relative; /* Positioning reference for absolute children */
+  overflow: hidden;
+  isolation: isolate;
+  border-radius: 24px;
+  background: var(--cream);
+  box-shadow: 0 12px 28px rgb(0 0 0 / 12%);
+}
+
+/* Two background panels sit behind the content. */
+.yellow-panel,
+.cream-panel {
+  position: absolute;
+  inset-block: 0;
+  z-index: -1;
+}
+
+.yellow-panel {
+  left: 0;
+  width: 60%;
+  background: radial-gradient(circle at 38% 48%, #ffd51a 0, var(--yellow) 68%, #ffc400 100%);
+}
+
+.cream-panel {
+  right: 0;
+  width: 40%;
+  background: linear-gradient(135deg, #ffefc1, #ffedbd);
+}
+
+.site-header {
+  position: absolute;
+  top: 32px;
+  left: 44px;
+  right: 56px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  z-index: 5;
+}
+
+.logo {
+  display: block;
+  width: 180px;
+}
+
+.logo img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.menu-button {
+  border: 0;
+  background: transparent;
+  padding: 10px 0 10px 10px;
+  width: 48px;
+  display: grid;
+  gap: 9px;
+  cursor: pointer;
+}
+
+.menu-button span {
+  display: block;
+  height: 4px;
+  border-radius: 10px;
+  background: #111;
+  width: 44px;
+}
+
+.copy {
+  position: absolute;
+  left: 5.4%;
+  top: 27%;
+  width: 42%;
+  z-index: 2;
+}
+
+.eyebrow {
+  margin: 0 0 32px;
+  font-size: clamp(11px, 1.2vw, 18px);
+  font-weight: 800;
+  letter-spacing: 0.38em;
+}
+
+h1 {
+  margin: 0 0 22px -5px;
+  font-size: clamp(64px, 9.8vw, 154px);
+  line-height: 0.92;
+  letter-spacing: -0.055em;
+  font-weight: 800;
+}
+
+.description {
+  margin: 0;
+  font-size: clamp(14px, 1.45vw, 23px);
+  line-height: 1.72;
+  color: #29230e;
+}
+
+.slide-count {
+  margin-top: 38px;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  font-size: clamp(15px, 1.45vw, 22px);
+}
+
+.slide-count span {
+  width: 46px;
+  height: 2px;
+  background: #111;
+}
+
+.pokemon-art {
+  position: absolute;
+  z-index: 3;
+  width: 53%;
+  right: 8%;
+  top: 17%;
+  pointer-events: none;
+}
+
+.pokemon-art img {
+  display: block;
+  width: 100%;
+  height: auto;
+  filter: drop-shadow(0 5px 2px rgb(0 0 0 / 2%));
+}
+
+.slide-dots {
+  position: absolute;
+  right: 2.8%;
+  top: 45%;
+  z-index: 4;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.slide-dots a {
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: var(--yellow);
+}
+
+.slide-dots a.active {
+  background: #111;
+}
+
+.pokeball-watermark {
+  position: absolute;
+  left: 5.5%;
+  bottom: -75px;
+  width: 260px;
+  height: 260px;
+  border: 24px solid rgb(184 142 0 / 22%);
+  border-radius: 50%;
+}
+
+.pokeball-watermark::before {
+  content: "";
+  position: absolute;
+  left: -24px;
+  right: -24px;
+  top: 50%;
+  height: 24px;
+  transform: translateY(-50%);
+  background: rgb(184 142 0 / 22%);
+}
+
+.pokeball-watermark::after {
+  content: "";
+  position: absolute;
+  width: 70px;
+  height: 70px;
+  border: 18px solid rgb(184 142 0 / 22%);
+  border-radius: 50%;
+  background: var(--yellow);
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* Responsive layout: stack content and artwork on narrow screens. */
+@media (max-width: 800px) {
+  body {
+    padding: 12px;
+    display: block;
+  }
+
+  .pokemon-card {
+    min-height: 880px;
+    border-radius: 18px;
+  }
+
+  .yellow-panel {
+    width: 100%;
+    height: 64%;
+    bottom: auto;
+  }
+
+  .cream-panel {
+    width: 100%;
+    height: 36%;
+    top: auto;
+  }
+
+  .site-header {
+    top: 20px;
+    left: 22px;
+    right: 24px;
+  }
+
+  .logo {
+    width: 125px;
+  }
+
+  .menu-button {
+    transform: scale(.8);
+    transform-origin: top right;
+  }
+
+  .copy {
+    top: 17%;
+    left: 7%;
+    width: 86%;
+  }
+
+  .eyebrow {
+    margin-bottom: 18px;
+    letter-spacing: .3em;
+  }
+
+  h1 {
+    font-size: clamp(60px, 16vw, 100px);
+    margin-bottom: 14px;
+  }
+
+  .description {
+    font-size: 15px;
+    line-height: 1.55;
+    max-width: 390px;
+  }
+
+  .desktop-break {
+    display: none;
+  }
+
+  .slide-count {
+    margin-top: 20px;
+  }
+
+  .pokemon-art {
+    width: 78%;
+    right: 8%;
+    top: auto;
+    bottom: 4%;
+  }
+
+  .slide-dots {
+    right: 5%;
+    top: auto;
+    bottom: 17%;
+    gap: 12px;
+  }
+
+  .slide-dots a {
+    width: 10px;
+    height: 10px;
+  }
+
+  .pokeball-watermark {
+    width: 160px;
+    height: 160px;
+    border-width: 16px;
+    bottom: -52px;
+    left: 3%;
+  }
+
+  .pokeball-watermark::before {
+    left: -16px;
+    right: -16px;
+    height: 16px;
+  }
+
+  .pokeball-watermark::after {
+    width: 48px;
+    height: 48px;
+    border-width: 12px;
+  }
+}
+
+@media (max-width: 420px) {
+  .pokemon-card {
+    min-height: 820px;
+  }
+
+  .copy {
+    top: 18%;
+  }
+
+  .description {
+    max-width: 320px;
+  }
+
+  .pokemon-art {
+    width: 90%;
+    right: 4%;
+    bottom: 5%;
+  }
+
+  .slide-dots {
+    right: 4%;
+    bottom: 15%;
+  }
+}
